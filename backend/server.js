@@ -50,13 +50,12 @@ app.post("/api/login", (req, res) => {
             [req.body.username, req.body.password],
             (error, results, fields) => {
                 if (error) throw error;
-                let payload = {
-                    id: results[0].id,
-                    username: results[0].username,
-                    name: results[0].name
-                }
                 if (results.length > 0) {
-
+                    let payload = {
+                        id: results[0].id,
+                        username: results[0].username,
+                        name: results[0].name
+                    }
                     jwt.sign(payload, "shhhhhh", { expiresIn: '1d' }, (err, token) => {
                         if (err) throw err;
 
@@ -73,10 +72,33 @@ app.post("/api/login", (req, res) => {
 
 });
 
+app.post("/api/submitResult", verifyToken, (req, res) => {
+
+    let codes = [];
+    req.body.result.forEach(element => {
+        codes.push([req.userData.id, element]);
+    });
+
+    pool.getConnection((err, connection) => {
+        if (err) throw err;
+
+        let query = connection.query('INSERT INTO user_code (user_id, code) VALUES ?', [codes], (error, results, fields) => {
+            if (error) throw error;
+
+            res.status(200).json({ hetto: "wer" })
+
+
+
+        });
+        console.log(query.sql)
+    });
+
+});
+
+
 
 app.get("/api/checkSession", verifyToken, (req, res) => {
-    res.status(200).json(req.data);
-
+    res.status(200).json(req.userData);
 });
 
 function verifyToken(req, res, next) {
@@ -93,7 +115,7 @@ function verifyToken(req, res, next) {
                 res.status(403).json({ message: "Forbidden" })
                 throw err
             } else {
-                req.data = authData;
+                req.userData = authData;
                 next();
             }
         });
@@ -104,6 +126,52 @@ function verifyToken(req, res, next) {
         res.status(403).json({ message: "Forbidden" })
     }
 }
+
+app.get('/api/getMyCode', verifyToken, (req, res) => {
+    console.log(req.userData)
+
+    function getCodes(callback) {
+        pool.getConnection((err, connection) => {
+            if (err) throw err;
+            let holder = [];
+
+            const query = connection.query(`SELECT code FROM user_code WHERE user_id=${req.userData.id}`, (error, results, fields) => {
+                if (error) throw error;
+
+                results.forEach((element) => {
+                    const query = connection.query('SELECT * from `code` WHERE `code` = ?', [element.code], (error, results, fields) => {
+                        if (error) throw error;
+                        holder.push({
+                            name: element.code,
+                            result: results
+                        })
+                    })
+
+                });
+
+                setTimeout(() => callback(holder), 1000)
+
+
+
+            });
+
+
+
+
+
+
+
+
+
+
+        });
+    }
+
+    getCodes((data) => {
+        res.status(200).json(data)
+    })
+
+});
 
 
 
