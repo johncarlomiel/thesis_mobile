@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Gordon College SDS
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-title class="bolder center">
+    Gordon College SDS
+  </ion-title>
+  <ion-item margin>
+    <ion-label position="floating">Username</ion-label>
+    <ion-input #username></ion-input>
+  </ion-item>
+
+  <ion-item margin>
+    <ion-label position="floating">Password</ion-label>
+    <ion-input #password></ion-input>
+  </ion-item>
+
+  <ion-button expand="block" margin (click)="login(username.value, password.value)">Login</ion-button>
+
+</ion-content>
