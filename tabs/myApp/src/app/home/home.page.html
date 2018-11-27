@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Home</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+      <!-- General Information Section -->
+      <ion-list>
+        <ion-list-header>
+          <ion-label><h1 class="primary bolder">General Information</h1></ion-label>
+          <ion-button (click)="presentInfoModal()">
+              <ion-icon slot="start" name="create"></ion-icon>
+              Update
+            </ion-button>
+        </ion-list-header>
+        <ion-item>
+            <ion-label>
+              <h2>Name : {{name}}</h2>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+       
+        <!-- General Information Section -->
+  </ion-item>
+</ion-content>
