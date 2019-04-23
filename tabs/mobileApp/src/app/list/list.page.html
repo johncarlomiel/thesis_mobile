@@ -1,0 +1,28 @@
+<ion-toolbar color="tertiary">
+  <ion-buttons slot="start">
+    <ion-menu-button></ion-menu-button>
+  </ion-buttons>
+  <ion-title>
+    My Contacts
+  </ion-title>
+</ion-toolbar>
+
+<ion-content no-padding>
+  <ion-list lines="none" *ngIf="contacts" no-padding>
+    <ion-item color="tertiary" *ngFor="let user of contacts"
+      (click)="messageModal(user.contact_user_id, user.convo_name, user.name)">
+      <ion-avatar slot="start" [ngClass]="{'online': user.isOnline}" style="height:4em;width:4em;">
+        <img [src]="user.dp_path">
+      </ion-avatar>
+      <ion-label>
+        <h6 style="display:inline;float:right" class="ion-text-end" style="font-size:.8em;"
+          [ngClass]="{'online-text': user.isOnline}">
+          {{user.isOnline ? 'Active Now' : durationLastOnline(user.last_online)}}</h6>
+        <h2 class="primary" style="text-transform:capitalize;font-weight:bold;">
+          {{user.name}} </h2>
+        <p>{{user.recent_msg}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

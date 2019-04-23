@@ -1,0 +1,142 @@
+<div *ngIf="showSplash" class="splash">
+  <div class="sk-cube-grid">
+    <div class="sk-cube sk-cube1"></div>
+    <div class="sk-cube sk-cube2"></div>
+    <div class="sk-cube sk-cube3"></div>
+    <div class="sk-cube sk-cube4"></div>
+    <div class="sk-cube sk-cube5"></div>
+    <div class="sk-cube sk-cube6"></div>
+    <div class="sk-cube sk-cube7"></div>
+    <div class="sk-cube sk-cube8"></div>
+    <div class="sk-cube sk-cube9"></div>
+  </div>
+</div>
+
+<ion-app>
+  <ion-split-pane>
+    <ion-menu (ionWillOpen)="checkProfileProgress();getUserData();" menuId="profileMenu">
+      <ion-header no-margin>
+        <ion-toolbar color="tertiary" padding>
+          <ion-avatar class="avatar">
+            <ion-img *ngIf="user_data" [src]="user_data.dp_path" width="100%" height="100%"></ion-img>
+          </ion-avatar>
+          <ion-label margin>
+            <h1 class="center bolder" *ngIf="user_data">{{user_data.name}}</h1>
+          </ion-label>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content no-margin>
+        <ion-list no-padding>
+          <ion-menu-toggle auto-hide="false">
+            <!-- <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+              <ion-icon slot="start" [name]="p.icon"></ion-icon>
+              <ion-label>
+                {{p.title}}
+              </ion-label>
+            </ion-item> -->
+
+            <ion-item-divider color="tertiary">
+              <ion-label>
+                <h2 class="bolder">Profile Section</h2>
+              </ion-label>
+            </ion-item-divider>
+
+
+            <div>
+              <ion-item routerDirection="root" routerLink="/my-info">
+                <ion-icon *ngIf="progress" slot="start"
+                  [attr.name]="progress.basic_info ? 'checkmark-circle' : 'close-circle'"
+                  [attr.color]="progress.basic_info ? 'success' : 'dark'"></ion-icon>
+                <ion-label>
+                  <h4>My Information</h4>
+                </ion-label>
+              </ion-item>
+
+
+              <ion-item routerDirection="root" routerLink="/my-problems">
+                <ion-icon *ngIf="progress" slot="start"
+                  [attr.name]="progress.problems ? 'checkmark-circle' : 'close-circle'"
+                  [attr.color]="progress.problems ? 'success' : 'dark'"></ion-icon>
+                <ion-label>
+                  <h4>My Problems</h4>
+                </ion-label>
+              </ion-item>
+
+              <ion-item routerDirection="root" routerLink="/about-me">
+                <ion-icon *ngIf="progress" slot="start"
+                  [attr.name]="progress.more_info ? 'checkmark-circle' : 'close-circle'"
+                  [attr.color]="progress.more_info ? 'success' : 'dark'"></ion-icon>
+                <ion-label>
+                  <h4>About Me</h4>
+                </ion-label>
+              </ion-item>
+
+              <ion-item ruterDirection="root" routerLink="/e-form">
+                <ion-icon *ngIf="progress" slot="start"
+                  [attr.name]="progress.eform ? 'checkmark-circle' : 'close-circle'"
+                  [attr.color]="progress.eform ? 'success' : 'dark'"></ion-icon>
+                <ion-label>
+                  <h4>My Enrollment Form</h4>
+                </ion-label>
+              </ion-item>
+
+            </div>
+
+            <ion-item-divider color="tertiary">
+              <ion-label>
+                <h2 class="bolder">Actions</h2>
+              </ion-label>
+            </ion-item-divider>
+
+            <div>
+              <ion-item routerDirection="root" routerLink="/home" button="true">
+                <ion-icon slot="start" color="tertiary" name="wine"></ion-icon>
+                <ion-label>
+                  Events
+                </ion-label>
+              </ion-item>
+
+              <ion-item routerDirection="root" routerLink="/invitation" button="true">
+                <ion-icon slot="start" color="tertiary" name="notifications"></ion-icon>
+                <ion-label>
+                  Invitations
+                </ion-label>
+              </ion-item>
+
+              <ion-item routerDirection="root" routerLink="/list" button="true">
+                <ion-icon slot="start" color="tertiary" name="contacts"></ion-icon>
+                <ion-label>
+                  Contacts
+                </ion-label>
+              </ion-item>
+
+              <ion-item routerDirection="root" routerLink="/sds-result" button="true">
+                <ion-icon slot="start" color="tertiary" name="school"></ion-icon>
+                <ion-label>
+                  SDS Result
+                </ion-label>
+              </ion-item>
+
+
+              <ion-item (click)="logout()" button="true">
+                <ion-icon slot="start" color="tertiary" name="log-out"></ion-icon>
+                <ion-label>
+                  Logout
+                </ion-label>
+              </ion-item>
+
+
+            </div>
+
+
+
+
+
+
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet main></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

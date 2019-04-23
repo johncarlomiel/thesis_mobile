@@ -1,0 +1,29 @@
+<ion-toolbar color="tertiary">
+  <ion-buttons slot="start">
+    <ion-menu-button></ion-menu-button>
+  </ion-buttons>
+  <ion-title>
+    SDS Test Results
+  </ion-title>
+</ion-toolbar>
+
+<ion-content>
+  <ion-label padding color="danger" *ngIf="userCodes.length == 0">
+    <h2 class="center bolder">SDS Examination still not taken</h2>
+  </ion-label>
+
+  <ion-list *ngFor="let singleCode of userCodes">
+    <ion-list-header>
+      <ion-label>
+        <h2 class="primary bolder">{{singleCode.name}}</h2>
+      </ion-label>
+    </ion-list-header>
+
+    <ion-item *ngFor="let code of singleCode.result">
+      <ion-label>
+        <h3 class="primary bolder">{{code.occupation}}</h3>
+        <p>{{code.description}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

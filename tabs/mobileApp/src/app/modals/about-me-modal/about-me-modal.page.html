@@ -1,0 +1,89 @@
+<ion-toolbar color="tertiary">
+
+  <ion-buttons slot="start">
+    <ion-button color="light" (click)="return();">
+      <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-title>About Me</ion-title>
+</ion-toolbar>
+
+<ion-content padding>
+
+  <ion-list *ngFor="let item of moreInfo">
+    <ion-list-header>
+      <ion-label>
+        <h3 class="primary bolder">{{item.label}}</h3>
+      </ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-textarea [(ngModel)]="item.value"></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <!-- 
+  <ion-list>
+    <ion-list-header>
+      <ion-label>
+        <h3 class="primary bolder">Is there some at Gordon College whom you can talk about your problems? who is
+          he/she?</h3>
+      </ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-textarea #friends></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>
+        <h3 class="primary bolder">My happiest experience:</h3>
+      </ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-textarea #happy_expi></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>
+        <h3 class="primary bolder">My downful experience:</h3>
+      </ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-textarea #downful_expi></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>
+        <h3 class="primary bolder">My ambition in life is to be/become:</h3>
+      </ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-textarea #ambition></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>
+        <h3 class="primary bolder">I want to change my:</h3>
+      </ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-textarea #change></ion-textarea>
+    </ion-item>
+  </ion-list> -->
+
+  <ion-button expand="block" (click)="submit()">
+    Submit</ion-button>
+
+
+
+
+
+
+</ion-content>

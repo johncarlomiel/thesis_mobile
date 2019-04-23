@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <h2 class="primary bolder center">Personal Problems</h2>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="center">
+
+    <ion-button shape="round" fill="outline" (click)="presentProblemModal()" color="tertiary">
+      <ion-icon slot="start" name="create"></ion-icon>
+      Update Now
+    </ion-button>
+
+    <ion-item lines="none">
+      <ion-label *ngIf="!isProblemsUpdated" text-wrap>
+        <h2 style="text-align:center">Update your problems using the button above</h2>
+      </ion-label>
+    </ion-item>
+  </div>
+  <ion-list *ngFor="let singleProblem of userProblem">
+    <ion-list-header>
+      <ion-label color="primary">
+        <h2 class="bolder">{{singleProblem.name}}</h2>
+      </ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let maValue of singleProblem.questions">
+      <ion-label text-wrap>
+        <p>{{maValue.label}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

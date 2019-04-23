@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <h2 class="primary bolder center">Enrollment Form Photo</h2>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="center">
+
+    <ion-button shape="round" fill="outline" (click)="cameraStart()">
+      <ion-icon slot="end" name="camera"></ion-icon>
+      Update
+    </ion-button>
+  </div>
+  <ion-item *ngIf="!isImageLoading">
+    <img *ngIf="hasEform" src="{{imageToShow}}" (click)="viewImage(imageToShow)">
+    <h2 *ngIf="!hasEform" class="bolder center primary">Click the button above to update your eform photo</h2>
+  </ion-item>
+</ion-content>

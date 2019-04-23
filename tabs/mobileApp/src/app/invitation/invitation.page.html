@@ -1,0 +1,48 @@
+<ion-toolbar color="tertiary">
+  <ion-buttons slot="start">
+    <ion-menu-button></ion-menu-button>
+  </ion-buttons>
+  <ion-title>
+    Invitations
+  </ion-title>
+</ion-toolbar>
+
+<ion-content>
+  <ion-card class="welcome-card" *ngFor="let event of invitations" color="tertiary">
+    <ion-card-content>
+
+      <ion-img [src]="event.poster_url"></ion-img>
+      <ion-card-header>
+        <ion-card-title>{{event.name}}</ion-card-title>
+        <ion-card-subtitle>
+          {{event.location}}
+        </ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-item no-padding color="tertiary">
+        <ion-label *ngIf="!event.seeMore" color="light">
+
+          <p style="white-space:pre-line">{{trim(event.description)}} <span style="color:whitesmoke"
+              (click)="event.seeMore = true"><br>See
+              more</span></p>
+        </ion-label>
+        <ion-label *ngIf="event.seeMore" color="light">
+
+          <p style="white-space:pre-line"> {{event.description}} <span style="color:whitesmoke"
+              (click)="event.seeMore = false"><br>See
+              less</span></p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item color="tertiary" no-padding>
+        <ion-button color="light" (click)="accept(event.event_id);">Accept</ion-button>
+        <ion-button color="danger" (click)="decline(event.event_id);">Decline</ion-button>
+      </ion-item>
+
+    </ion-card-content>
+
+
+  </ion-card>
+
+
+</ion-content>

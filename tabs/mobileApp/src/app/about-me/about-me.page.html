@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <h2 class="bold center">About Me</h2>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-header>
+      <div class="center">
+
+        <ion-button shape="round" fill="outline" (click)="presentMoreInfoModal()">
+          <ion-icon slot="start" name="create"></ion-icon>
+          Update
+        </ion-button>
+      </div>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list *ngFor="let info of moreInfo">
+        <ion-list-header>
+          <ion-label>
+            <h2 class="primary bolder">{{info.label}}</h2>
+          </ion-label>
+        </ion-list-header>
+        <ion-item>
+          <ion-label text-wrap>
+            <p>{{info.value}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

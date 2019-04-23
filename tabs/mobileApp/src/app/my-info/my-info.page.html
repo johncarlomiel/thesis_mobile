@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <h2 class="bold center">My Information</h2>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="center">
+    <ion-button shape="round" fill="outline" (click)="presentInfoModal()" color="tertiary">
+      <ion-icon name="create"></ion-icon>
+      Update Now
+    </ion-button>
+  </div>
+  <ion-list>
+    <ion-item *ngFor="let eachInfo of info" no-padding>
+      <ion-label text-wrap>
+        <p> <span class="primary bolder">{{eachInfo.label}}</span> : {{eachInfo.value}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+
+
+</ion-content>
