@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import {
   trigger,
   state,
@@ -35,7 +35,7 @@ import { config } from '../../configs/config';
 })
 export class MessagePage implements OnInit {
   @Input("contact_user_id") contact_user_id;
-
+  @ViewChild('message') messageBox: any;
   @Input("convo_name") convo_name;
   @Input("contact_name") contact_name;
   @Input("user_data") user_data;
@@ -108,6 +108,7 @@ export class MessagePage implements OnInit {
       this.currentDataLength = msgs.length;
       this.messages = msgs.reverse();
       this.content.scrollToBottom(0);
+
       setTimeout(() => {
         this.isLoading = false;
         console.log("loading now functioning")
@@ -120,9 +121,12 @@ export class MessagePage implements OnInit {
 
   }
   sendMessage(msg) {
+    this.messageBox.value = "";
+
     this.storage.get("Authorization").then((authToken) => {
 
       this.chatService.sendMessage(msg, authToken, this.limit, this.convo_name);
+
     }).catch((err) => console.log(err));
   }
 

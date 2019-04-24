@@ -33,7 +33,7 @@ export class EFormPage implements OnInit {
   viewImage(path) {
     let title = "Enrollment Form";
     let options = {
-      share: true,
+      share: false,
       closeButton: true
     }
     this.photoViewer.show(path, title, options)
@@ -44,7 +44,7 @@ export class EFormPage implements OnInit {
     this.storage.get("Authorization").then((authToken) => {
       this.isImageLoading = true;
       this.userService.getEform(authToken).subscribe((successData) => {
-        console.log(successData)
+        alert(successData)
         this.isImageLoading = false;
         if (successData.hasEform) {
           this.hasEform = true;

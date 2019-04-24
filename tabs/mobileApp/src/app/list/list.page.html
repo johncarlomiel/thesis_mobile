@@ -15,7 +15,7 @@
         <img [src]="user.dp_path">
       </ion-avatar>
       <ion-label>
-        <h6 style="display:inline;float:right" class="ion-text-end" style="font-size:.8em;"
+        <h6 style="display:inline;float:right;color:white;" class="ion-text-end" style="font-size:.8em;"
           [ngClass]="{'online-text': user.isOnline}">
           {{user.isOnline ? 'Active Now' : durationLastOnline(user.last_online)}}</h6>
         <h2 class="primary" style="text-transform:capitalize;font-weight:bold;">

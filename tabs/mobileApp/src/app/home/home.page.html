@@ -5,52 +5,117 @@
   <ion-title>
     Events
   </ion-title>
+
 </ion-toolbar>
 
 <ion-content>
-  <ion-card class="welcome-card" *ngFor="let event of events" color="tertiary">
+
+  <ion-segment value="incoming" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="incoming">
+      Incoming Events
+    </ion-segment-button>
+    <ion-segment-button value="past">
+      Past Events
+    </ion-segment-button>
+  </ion-segment>
+  <div *ngIf="page == 'incoming'">
+    <ion-card class="welcome-card" *ngFor="let event of incomingEvents" color="tertiary">
 
 
-    <ion-card-content>
-      <ion-img [src]="event.poster_url"></ion-img>
-      <ion-card-header>
-        <ion-card-title>{{event.name}}</ion-card-title>
-        <ion-card-subtitle>
-          {{event.location}}
-        </ion-card-subtitle>
-      </ion-card-header>
-      <ion-item no-padding color="tertiary">
-        <ion-button shape="round" fill="clear" color="light">
-          <ion-icon slot="icon-only" name="heart-empty"></ion-icon>
-        </ion-button>
+      <ion-card-content>
+        <ion-img [src]="event.poster_url" (click)="viewPhoto(event.poster_url, event.name)"></ion-img>
+        <ion-card-header>
+          <ion-card-title>{{event.name}}</ion-card-title>
+          <ion-card-subtitle>
+            Location: {{event.location}} <br>
+            Date: {{event.date}}
+          </ion-card-subtitle>
+        </ion-card-header>
+        <ion-item no-padding color="tertiary">
+          <ion-button shape="round" fill="clear" color="light">
+            <ion-icon slot="icon-only" name="heart-empty"></ion-icon>
+          </ion-button>
 
 
-        <ion-button shape="round" fill="clear" color="light">
-          <ion-icon slot="icon-only" name="text"></ion-icon>
-        </ion-button>
+          <ion-button shape="round" fill="clear" color="light">
+            <ion-icon slot="icon-only" name="text"></ion-icon>
+          </ion-button>
 
-        <ion-button shape="round" fill="clear" color="light">
-          <ion-icon slot="icon-only" name="paper-plane"></ion-icon>
-        </ion-button>
-      </ion-item>
+          <ion-button shape="round" fill="clear" color="light">
+            <ion-icon slot="icon-only" name="paper-plane"></ion-icon>
+          </ion-button>
+        </ion-item>
 
-      <ion-item no-padding color="tertiary">
-        <ion-label *ngIf="!event.seeMore" color="light">
+        <ion-item no-padding color="tertiary">
+          <ion-label *ngIf="!event.seeMore" color="light">
 
-          <p style="white-space:pre-line">{{trim(event.description)}} <span style="color:whitesmoke"
-              (click)="event.seeMore = true"><br>See
-              more</span></p>
-        </ion-label>
-        <ion-label *ngIf="event.seeMore" color="light">
+            <p style="white-space:pre-line">{{trim(event.description)}} <span style="color:whitesmoke"
+                (click)="event.seeMore = true"><br>See
+                more</span></p>
+          </ion-label>
+          <ion-label *ngIf="event.seeMore" color="light">
 
-          <p style="white-space:pre-line"> {{event.description}} <span style="color:whitesmoke"
-              (click)="event.seeMore = false"><br>See
-              less</span></p>
-        </ion-label>
-      </ion-item>
+            <p style="white-space:pre-line"> {{event.description}} <span style="color:whitesmoke"
+                (click)="event.seeMore = false"><br>See
+                less</span></p>
+          </ion-label>
+        </ion-item>
 
 
-    </ion-card-content>
-  </ion-card>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="page == 'past'">
+    <ion-card class="welcome-card" *ngFor="let event of pastEvents" color="tertiary">
+
+
+      <ion-card-content>
+        <ion-img [src]="event.poster_url" (click)="viewPhoto(event.poster_url, event.name)"></ion-img>
+        <ion-card-header>
+          <ion-card-title>{{event.name}}</ion-card-title>
+          <ion-card-subtitle>
+            Location: {{event.location}}
+          </ion-card-subtitle>
+        </ion-card-header>
+        <ion-item no-padding color="tertiary">
+          <ion-button shape="round" fill="clear" color="light">
+            <ion-icon slot="icon-only" name="heart-empty"></ion-icon>
+          </ion-button>
+
+
+          <ion-button shape="round" fill="clear" color="light">
+            <ion-icon slot="icon-only" name="text"></ion-icon>
+          </ion-button>
+
+          <ion-button shape="round" fill="clear" color="light">
+            <ion-icon slot="icon-only" name="paper-plane"></ion-icon>
+          </ion-button>
+        </ion-item>
+
+        <ion-item no-padding color="tertiary">
+          <ion-label *ngIf="!event.seeMore" color="light">
+
+            <p style="white-space:pre-line">{{trim(event.description)}} <span style="color:whitesmoke"
+                (click)="event.seeMore = true"><br>See
+                more</span></p>
+          </ion-label>
+          <ion-label *ngIf="event.seeMore" color="light">
+
+            <p style="white-space:pre-line"> {{event.description}} <span style="color:whitesmoke"
+                (click)="event.seeMore = false"><br>See
+                less</span></p>
+          </ion-label>
+        </ion-item>
+
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+
+
+
+
 
 </ion-content>

@@ -128,6 +128,7 @@ export class AppComponent {
           this.getNewMessagesForNotif(authToken);
           this.getNewInvitations(authToken);
 
+          console.log(authToken)
           this.chatService.getNewInvitation().subscribe((invitations) => {
             console.log(invitations);
             this.localNotifications.hasPermission().then((granted) => {
@@ -214,6 +215,7 @@ export class AppComponent {
   getNewMessagesForNotif(authToken) {
     this.chatService.getContacts(authToken).subscribe((responseData) => {
       this.contacts = responseData;
+      console.log(this.contacts)
 
 
 
@@ -307,17 +309,25 @@ export class AppComponent {
 
   logout() {
     // this.chatSocket.emit('logout', this.user_data.id);
-    this.storage.clear().then(() => {
+    this.storage.get('Authorization').then((authToken) => {
+      this.chatService.getContacts(authToken).subscribe((contacts) => {
+        contacts.forEach(element => {
+          let data = {
+            id: this.user_data.id,
+            convo_name: element.convo_name
+          }
+          this.chatService.logout(data);
+        });
 
-      this.contacts.forEach(element => {
-        let data = {
-          id: this.user_data.id,
-          convo_name: element.convo_name
-        }
-        this.chatService.logout(data);
+        this.storage.clear().then(() => {
+
+
+          this.router.navigate(["/login"]);
+        }).catch((err) => console.log(err));
       });
-      this.router.navigate(["/login"]);
-    }).catch((err) => console.log(err));
+    });
+
+
 
 
 

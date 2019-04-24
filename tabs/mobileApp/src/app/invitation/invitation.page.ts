@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { InvitationService } from '../services/invitation/invitation.service';
 import { ToastController } from '@ionic/angular';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 @Component({
   selector: 'app-invitation',
@@ -10,10 +11,20 @@ import { ToastController } from '@ionic/angular';
 })
 export class InvitationPage implements OnInit {
   invitations: Array<any>
-  constructor(private storage: Storage, private invitationService: InvitationService, private toastController: ToastController) { }
+  constructor(private storage: Storage,
+    private invitationService: InvitationService,
+    private toastController: ToastController,
+    private photoViewer: PhotoViewer) { }
 
   ngOnInit() {
     this.getPendingInvitations();
+  }
+  viewPhoto(url, title) {
+    let options = {
+      share: false,
+      closeButton: true
+    }
+    this.photoViewer.show(url, title, options)
   }
   accept(event_id) {
     this.storage.get("Authorization").then((authToken) => {

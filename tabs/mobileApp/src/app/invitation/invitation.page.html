@@ -11,11 +11,12 @@
   <ion-card class="welcome-card" *ngFor="let event of invitations" color="tertiary">
     <ion-card-content>
 
-      <ion-img [src]="event.poster_url"></ion-img>
+      <ion-img [src]="event.poster_url" (click)="viewPhoto(event.poster_url, event.name)"></ion-img>
       <ion-card-header>
         <ion-card-title>{{event.name}}</ion-card-title>
         <ion-card-subtitle>
-          {{event.location}}
+          Location: {{event.location}} <br>
+          Date: {{event.date}}
         </ion-card-subtitle>
       </ion-card-header>
 
