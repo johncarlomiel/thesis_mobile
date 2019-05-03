@@ -20,7 +20,7 @@
   </ion-segment>
   <div *ngIf="page == 'incoming'">
     <div *ngFor="let event of events; let i = index;">
-      <ion-card class="welcome-card" *ngIf="isFuture(event)" color="tertiary">
+      <ion-card class="welcome-card" *ngIf="isFuture(event)">
 
 
         <ion-card-content>
@@ -31,9 +31,24 @@
               Location: {{event.location}} <br>
               Date: {{event.date}}
             </ion-card-subtitle>
+            <ion-item no-padding color="tertiary">
+              <ion-label *ngIf="!event.seeMore" color="light">
+
+                <p style="white-space:pre-line">{{trim(event.description)}} <span style="color:whitesmoke"
+                    (click)="event.seeMore = true"><br>See
+                    more</span></p>
+              </ion-label>
+              <ion-label *ngIf="event.seeMore " color="light">
+
+                <p style="white-space:pre-line"> {{event.description}} <span style="color:whitesmoke"
+                    (click)="event.seeMore = false"><br>See
+                    less</span></p>
+              </ion-label>
+            </ion-item>
           </ion-card-header>
           <ion-item color="tertiary">
             <ion-label>{{event.likes_counter}} Like(s)</ion-label>
+            <ion-label>{{event.comments_counter}} Comment(s)</ion-label>
           </ion-item>
           <ion-item no-padding color="tertiary">
             <ion-button shape="round" fill="clear" color="light" (click)="like(i)">
@@ -50,25 +65,57 @@
             </ion-button>
           </ion-item>
 
-          <ion-item *ngIf="event.isCommentOpen">
-            <ion-icon slot="end" name="send" style="zoom:2.0;" (click)="sendMessage(message.value)"></ion-icon>
-            <ion-input placeholder="Type a message.." #message></ion-input>
+
+
+          <ion-list *ngIf="event.isCommentOpen">
+
+            <ion-item-sliding *ngFor="let comment of event.comments" #slidingItem>
+              <ion-item>
+                <ion-avatar slot="start">
+                  <img [src]="comment.dp_path">
+                </ion-avatar>
+
+                <ion-label>
+                  <h2>{{comment.name}}</h2>
+                  <p>{{comment.comment}}</p>
+
+                  <ion-item no-padding lines="none">
+                    <ion-button shape="round" fill="clear" (click)="like(i)">
+                      <ion-icon slot="icon-only" [name]="event.icon"></ion-icon>
+                    </ion-button>
+
+
+                    <ion-button shape="round" fill="clear" (click)="event.isCommentOpen = !event.isCommentOpen">
+                      <ion-icon slot="icon-only" name="text"></ion-icon>
+                    </ion-button>
+
+                    <ion-label>{{durationLastOnline(comment.timestamp)}} ago</ion-label>
+                  </ion-item>
+                </ion-label>
+              </ion-item>
+              <ion-item-options *ngIf="comment.id == userData.id">
+                <ion-item-option color="primary">
+                  <ion-icon slot="bottom" name="more"></ion-icon>
+                  More
+                </ion-item-option>
+                <ion-item-option color="secondary"
+                  (click)="deleteComment(slidingItem,comment.comment_id,event.event_id);">
+                  <ion-icon slot="bottom" name="archive"></ion-icon>
+                  Delete
+                </ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+
+
+
+
+          </ion-list>
+
+          <ion-item *ngIf="event.isCommentOpen" color="tertiary">
+            <ion-icon slot="end" name="send" color="light" (click)="sendComment(event, message.value)"></ion-icon>
+            <ion-input placeholder="Type a comment" #message></ion-input>
           </ion-item>
 
-          <ion-item no-padding color="tertiary">
-            <ion-label *ngIf="!event.seeMore" color="light">
-
-              <p style="white-space:pre-line">{{trim(event.description)}} <span style="color:whitesmoke"
-                  (click)="event.seeMore = true"><br>See
-                  more</span></p>
-            </ion-label>
-            <ion-label *ngIf="event.seeMore" color="light">
-
-              <p style="white-space:pre-line"> {{event.description}} <span style="color:whitesmoke"
-                  (click)="event.seeMore = false"><br>See
-                  less</span></p>
-            </ion-label>
-          </ion-item>
 
 
         </ion-card-content>

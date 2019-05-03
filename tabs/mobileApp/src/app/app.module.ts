@@ -29,7 +29,8 @@ import { AppRoutingModule } from './app-routing.module';
     AppRoutingModule,
     IonicStorageModule.forRoot(),
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+
 
   ],
   providers: [

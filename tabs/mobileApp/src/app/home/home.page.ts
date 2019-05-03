@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import io from 'socket.io-client';
 import { Storage } from '@ionic/storage';
 import { UserService } from '../services/user.service';
-import { MenuController } from '@ionic/angular';
+import { MenuController, IonItemSliding } from '@ionic/angular';
 import * as date_fns from 'date-fns';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { LikeService } from '../services/like/like.service';
-
+import { CommentService } from '../services/comment/comment.service';
+import { IonList } from '@ionic/angular';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -19,13 +20,15 @@ export class HomePage {
   page = "incoming";
   pastEvents = Array.apply(null, Array())
   incomingEvents = Array.apply(null, Array())
+  @ViewChild('slidingList') slidingList: IonList;
 
   constructor(
     private storage: Storage,
     private userService: UserService,
     private menuController: MenuController,
     private photoViewer: PhotoViewer,
-    private likeService: LikeService
+    private likeService: LikeService,
+    private commentService: CommentService,
   ) { }
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -42,30 +45,50 @@ export class HomePage {
     //Check for new like update
     this.likeService.newLike().subscribe((event) => {
       console.log(event)
-      this.events.forEach((element, index) => {
+
+      for (let index = 0; index < this.events.length; index++) {
         if (this.events[index].event_id == event.event_id) {
-
-
-          // console.log(this.events[index])
-          // this.events[index].user_id = event.user_id;
           this.events[index].likes_counter = event.likes_counter;
-          // this.events[index].icon = "heart";
-          // console.log(this.events[index].user_id)
-          // if (this.events[index].user_id == null) {
-          //   this.events[index].icon = "heart-empty";
-          // } else {
-          //   this.events[index].icon = "heart";
-
-          // }
 
 
-
-
-
-
+          break;
         }
-      });
+      }
     });
+
+    // Receive New Comments
+    this.commentService.receiveNewComment().subscribe((event_with_comment) => {
+      for (let index = 0; index < this.events.length; index++) {
+        if (this.events[index].event_id == event_with_comment.event.event_id) {
+          this.events[index].comments_counter = event_with_comment.event.comments_counter;
+          this.events[index].comments.push(event_with_comment.comment);
+          break;
+        }
+      }
+    });
+
+    //Receive New COmments from deletion
+    this.commentService.receiveNewCommentsDeletion().subscribe((event_with_comments) => {
+      for (let index = 0; index < this.events.length; index++) {
+        if (this.events[index].event_id == event_with_comments.event.event_id) {
+          this.events[index].comments_counter = event_with_comments.event.comments_counter;
+          this.events[index].comments = event_with_comments.comments;
+          break;
+        }
+      }
+    });
+
+  }
+  sendComment(event, comment) {
+    this.commentService.sendComment(event.event_id, this.userData.id, comment);
+  }
+
+  async deleteComment(slidingItem: IonItemSliding, comment_id, event_id) {
+    await slidingItem.close();
+
+
+
+    this.commentService.deleteComment(comment_id, event_id);
 
 
   }
@@ -112,7 +135,9 @@ export class HomePage {
   isFuture(event) {
     return date_fns.isFuture(event.date);
   }
-
+  durationLastOnline(date) {
+    return date_fns.distanceInWordsToNow(date);
+  }
 
   getEvents() {
     this.storage.get('Authorization').then((authToken) => {
