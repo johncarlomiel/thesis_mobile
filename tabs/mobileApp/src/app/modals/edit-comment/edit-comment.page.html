@@ -1,0 +1,20 @@
+<ion-toolbar color="tertiary">
+
+  <ion-buttons slot="start">
+    <ion-button color="light" (click)="return();">
+      <ion-icon slot="icon-only" name="close"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-title>Edit Comment</ion-title>
+  <ion-buttons slot="end">
+    <ion-button color="light" (click)="submitEdit(commentVal.value);">
+      SAVE
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content>
+  <ion-item lines="full">
+    <ion-textarea placeholder="Your comment" value="{{commentInfo.comment}}" #commentVal></ion-textarea>
+  </ion-item>
+</ion-content>

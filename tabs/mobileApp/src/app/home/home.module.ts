@@ -5,12 +5,15 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
+import { EventPage } from '../modals/event/event.page';
+import { EventPageModule } from '../modals/event/event.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    EventPageModule,
     RouterModule.forChild([
       {
         path: '',
@@ -18,6 +21,7 @@ import { HomePage } from './home.page';
       }
     ])
   ],
-  declarations: [HomePage]
+  declarations: [HomePage],
+  entryComponents: [EventPage]
 })
-export class HomePageModule {}
+export class HomePageModule { }

@@ -9,6 +9,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+import { Facebook } from "@ionic-native/facebook/ngx";
 
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { File } from '@ionic-native/file/ngx';
@@ -40,6 +41,7 @@ import { AppRoutingModule } from './app-routing.module';
     FileTransfer,
     File,
     Camera,
+    Facebook,
     LocalNotifications,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

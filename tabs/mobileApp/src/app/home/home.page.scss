@@ -1,5 +1,5 @@
 .welcome-card ion-img {
-  max-height: 35vh;
+  max-height: 100%;
   overflow: hidden;
 }
 ion-avatar {
@@ -9,4 +9,15 @@ ion-avatar {
 
 ion-label{
   font-size: .7em;
+}
+.image-container{
+  background-size:cover;
+}
+
+.item-inner {
+  padding-right: 0px!important;
+}
+
+ion-item{
+  --inner-padding-end:0;
 }

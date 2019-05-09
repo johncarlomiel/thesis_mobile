@@ -32,15 +32,17 @@ const routes: Routes = [
   { path: 'e-form', loadChildren: './e-form/e-form.module#EFormPageModule' },
   { path: 'message', loadChildren: './modals/message/message.module#MessagePageModule' },
   { path: 'invitation', loadChildren: './invitation/invitation.module#InvitationPageModule' },
+  { path: 'event', loadChildren: './modals/event/event.module#EventPageModule' },
+  { path: 'comment-popover', loadChildren: './popovers/comment-popover/comment-popover.module#CommentPopoverPageModule' },
+  { path: 'edit-comment', loadChildren: './modals/edit-comment/edit-comment.module#EditCommentPageModule' },
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes),
-    MessagePageModule
+
   ],
-  exports: [RouterModule],
-  entryComponents: [MessagePage]
+  exports: [RouterModule]
 
 })
 export class AppRoutingModule { }

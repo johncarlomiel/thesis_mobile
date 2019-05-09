@@ -92,4 +92,10 @@
     <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.2" />
     <plugin name="com-sarriaroman-photoviewer" spec="^1.1.18" />
     <engine name="android" spec="7.0.0" />
+    <plugin name="cordova-plugin-facebook4" spec="^4.2.1">
+        <variable name="APP_ID" value="460671338001065" />
+        <variable name="APP_NAME" value="GC Career Guidance App" />
+        <variable name="FACEBOOK_HYBRID_APP_EVENTS" value="false" />
+        <variable name="FACEBOOK_ANDROID_SDK_VERSION" value="4.40.0" />
+    </plugin>
 </widget>

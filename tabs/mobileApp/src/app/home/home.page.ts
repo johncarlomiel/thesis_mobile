@@ -2,12 +2,14 @@ import { Component, ViewChild } from '@angular/core';
 import io from 'socket.io-client';
 import { Storage } from '@ionic/storage';
 import { UserService } from '../services/user.service';
-import { MenuController, IonItemSliding } from '@ionic/angular';
+import { MenuController, IonItemSliding, ModalController } from '@ionic/angular';
 import * as date_fns from 'date-fns';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { LikeService } from '../services/like/like.service';
 import { CommentService } from '../services/comment/comment.service';
 import { IonList } from '@ionic/angular';
+import { EventPage } from '../modals/event/event.page';
+import { Facebook, FacebookLoginResponse } from "@ionic-native/facebook";
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -29,6 +31,7 @@ export class HomePage {
     private photoViewer: PhotoViewer,
     private likeService: LikeService,
     private commentService: CommentService,
+    private modalController: ModalController
   ) { }
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -69,12 +72,38 @@ export class HomePage {
 
     //Receive New COmments from deletion
     this.commentService.receiveNewCommentsDeletion().subscribe((event_with_comments) => {
+      console.log(event_with_comments)
       for (let index = 0; index < this.events.length; index++) {
         if (this.events[index].event_id == event_with_comments.event.event_id) {
           this.events[index].comments_counter = event_with_comments.event.comments_counter;
-          this.events[index].comments = event_with_comments.comments;
+          // this.events[index].comments = event_with_comments.comments;
+
+          for (let i = 0; i < this.events[index].comments.length; i++) {
+            if (this.events[index].comments[i].comment_id == event_with_comments.comment_id) {
+              this.events[index].comments.splice(i, 1);
+              console.log(this.events[index].comments[i])
+            }
+          }
+          // console.log(this.events[index])
           break;
         }
+      }
+
+    });
+
+    //Receive New Comment From Updating
+    this.commentService.receiveNewCommentUpdating().subscribe((comment_with_eventInfo) => {
+      for (let i = 0; i < this.events.length; i++) {
+        if (this.events[i].event_id == comment_with_eventInfo.event_id) {
+          for (let index = 0; index < this.events[i].comments.length; index++) {
+            if (this.events[i].comments[index].comment_id == comment_with_eventInfo.comment.comment_id) {
+              this.events[i].comments[index] = comment_with_eventInfo.comment;
+              break;
+            }
+          }
+          break;
+        }
+
       }
     });
 
@@ -139,6 +168,15 @@ export class HomePage {
     return date_fns.distanceInWordsToNow(date);
   }
 
+  async goToEvent(event) {
+    console.log(event)
+    const modal = await this.modalController.create({
+      component: EventPage,
+      componentProps: { eventInfo: event }
+    });
+    return await modal.present();
+  }
+
   getEvents() {
     this.storage.get('Authorization').then((authToken) => {
       this.userService.getEvents(authToken).subscribe((successData) => {
@@ -146,14 +184,17 @@ export class HomePage {
         console.log(this.events)
         this.events.forEach((element, index) => {
           this.events[index]["seeMore"] = false;
-          this.events[index]["isCommentOpen"] = false;
+          this.events[index]["isCommentOpen"] = true;
 
           if (this.events[index].user_id == null) {
             this.events[index]["icon"] = "heart-empty";
             this.events[index]["isLike"] = false;
+
           } else {
             this.events[index]["icon"] = "heart";
             this.events[index]["isLike"] = true;
+
+
           }
 
 
@@ -170,6 +211,12 @@ export class HomePage {
   }
   trim(string: string) {
     return string.substring(0, 45);
+  }
+
+  share(event) {
+    console.log(event);
+
+
   }
 
 

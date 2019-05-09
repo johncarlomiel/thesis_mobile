@@ -22,12 +22,28 @@ export class CommentService {
     this.commentSocket.emit('delete comment', comment_id, event_id);
   }
 
+  editComment(comment: { any }, event_id, newComment) {
+    this.commentSocket.emit('edit comment', comment, event_id, newComment);
+  }
+
+  receiveNewCommentUpdating(): Observable<any> {
+    return Observable.create((obs) => {
+      this.commentSocket.on('new comment from edit', (comment, event_id) => {
+        obs.next({
+          comment,
+          event_id
+        });
+      });
+    });
+  }
+
   receiveNewCommentsDeletion(): Observable<any> {
     return Observable.create((obs) => {
-      this.commentSocket.on('new comment from deletion', (event, comments) => {
+      this.commentSocket.on('new comment from deletion', (event, comments, comment_id) => {
         obs.next({
           event,
-          comments
+          comments,
+          comment_id
         });
       });
     });
