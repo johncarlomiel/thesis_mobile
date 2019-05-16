@@ -11,7 +11,7 @@ import { config } from '../configs/config';
 export class AuthService implements OnInit {
   IP: string = config.IP;
 
-  constructor(private http: HttpClient, private storage: Storage) { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
 

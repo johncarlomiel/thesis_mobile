@@ -3,7 +3,6 @@ import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Storage } from '@ionic/storage';
-import { async } from '@angular/core/testing';
 import { config } from '../../configs/config';
 import * as io from 'socket.io-client';
 

@@ -71,9 +71,10 @@ export class LoginPage implements OnInit {
       });
 
 
-    },
+    }, 
       (error) => {
         this.presentAlert();
+        this.loadingController.dismiss();
       });
   }
 
@@ -97,7 +98,8 @@ export class LoginPage implements OnInit {
     const alert = await this.alertController.create({
       header: 'Authentication Error!',
       message: 'Wrong username or password',
-      buttons: ['OK']
+      buttons: ['OK'],
+
 
     });
 
